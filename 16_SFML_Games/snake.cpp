@@ -7,7 +7,7 @@ int blockSize = 16;    // Sprite/Texture pixel size
 int screenWidth = blockSize * blockNumWidth;   // screenWidth, blockSize * N blocks
 int screenHeight = blockSize * blockNumHeight;   // screenHeight, blockSize * M blocks
 
-int direction, num = 4;  // The direction amount, I guess?
+int direction, snakeLength = 4;  // The direction amount, I guess?
 
 // The snake
 // x,y are movement directions
@@ -30,7 +30,7 @@ void Tick()
  {
     // i is index
     // Somehow relates to the end point/tail of the snake
-    for (int i = num; i > 0; --i)
+    for (int i = snakeLength; i > 0; --i)
     {
         snakeChar[i].x = snakeChar[i-1].x; 
         snakeChar[i].y = snakeChar[i-1].y;
@@ -41,26 +41,26 @@ void Tick()
     {
         snakeChar[0].y += 1;
     }
-    if (direction == 1)
+    else if (direction == 1)
     {
         snakeChar[0].x -= 1;
     }
-    if (direction == 2)
+    else if (direction == 2)
     {
         snakeChar[0].x += 1;
     }
-    if (direction == 3)
+    else
     {
         snakeChar[0].y -= 1;
     }
 
     // if snake head is in the same position as fruit
-    // Increases num by 1
+    // Increases snakeLength by 1
     // Consequently, increases the for loop count at the beginning of Tick()
     //Finally, randomizes fruit position
     if ((snakeChar[0].x == fruit.x) && (snakeChar[0].y == fruit.y)) 
     {
-        num++;
+        snakeLength++;
         fruit.x = rand() % blockNumWidth;
         fruit.y = rand() % blockNumHeight;
     }
@@ -84,13 +84,13 @@ void Tick()
     }
  
     // i = index
-    // If the snake head hits the snake index body, num is set to index
+    // If the snake head hits the snake index body, snakeLength is set to index
     // Consequently, for loop at the start is affected
-    for (int i = 1; i < num; i++)
+    for (int i = 1; i < snakeLength; i++)
     {
         if (snakeChar[0].x == snakeChar[i].x && snakeChar[0].y == snakeChar[i].y)
         {
-            num = i;
+            snakeLength = i;
         }
     }
  }
@@ -119,7 +119,7 @@ int snake()
     Clock clock;
     float timer=0, delay=0.1;
 
-    // Base(?) fruit position
+    // Base fruit position
     fruit.x=10;
     fruit.y=10; 
     
@@ -146,15 +146,15 @@ int snake()
         {
             direction = 1;
         }
-        if (Keyboard::isKeyPressed(Keyboard::Right))
+        else if (Keyboard::isKeyPressed(Keyboard::Right))
         {
             direction = 2;
         }
-        if (Keyboard::isKeyPressed(Keyboard::Up))
+        else if (Keyboard::isKeyPressed(Keyboard::Up))
         {
             direction = 3;
         }
-        if (Keyboard::isKeyPressed(Keyboard::Down))
+        else if (Keyboard::isKeyPressed(Keyboard::Down))
         {
             direction = 0;
         }
@@ -180,7 +180,7 @@ int snake()
             }
         }
 
-        for (int i = 0; i < num; i++)
+        for (int i = 0; i < snakeLength; i++)
         {
             occupiedTileSprite.setPosition(snakeChar[i].x * blockSize, snakeChar[i].y * blockSize);  // Sets the snake sprite position based off of the texture size
             window.draw(occupiedTileSprite); 
