@@ -6,7 +6,7 @@ int blockNumWidth = 30, blockNumHeight = 20, blockSize = 16;
 int screenWidth = blockSize * blockNumWidth;
 int screenHeight = blockSize * blockNumHeight;
 
-int down = 0, left = 1, right = 2;
+int down = 0, left = 1, right = 2, up = 3;
 
 int direction, snakeLength = 4;
 
@@ -92,10 +92,10 @@ int snake()
     Sprite occupiedTileSprite(occupiedTileTexture);
 
     Clock clock;
-    float timer=0, delay=0.1;
+    float timer = 0, delay = 0.1;
 
-    fruit.x=10;
-    fruit.y=10; 
+    fruit.x = 10;
+    fruit.y = 10; 
     
     while (window.isOpen())
     {
@@ -104,28 +104,28 @@ int snake()
         clock.restart();
         timer += time; 
 
-        Event e;
-        while (window.pollEvent(e))
+        Event event;
+        while (window.pollEvent(event))
         {
-            if (e.type == Event::Closed)      
+            if (event.type == Event::Closed)      
                 window.close();
         }
 
         if (Keyboard::isKeyPressed(Keyboard::Left))
         {
-            direction = 1;
+            direction = left;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Right))
         {
-            direction = 2;
+            direction = right;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Up))
         {
-            direction = 3;
+            direction = up;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Down))
         {
-            direction = 0;
+            direction = down;
         }
 
         if (timer > delay)
