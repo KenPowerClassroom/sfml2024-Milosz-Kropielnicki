@@ -47,8 +47,14 @@ TEST(Tick, SnakeIntersectsApple)
 
 	grid.spawnApple(5, 5);
 
-	for (int i = 2; i < 5; i++)
+	for (int i = 1; i < 5; i++)
 	{
-		grid.spawnSnake(i, 5);
+		grid.intersetion(i, 5);
 	}
+
+	EXPECT_EQ(Tick::tile::SNAKE, grid.cell(1, 5));
+	EXPECT_EQ(Tick::tile::SNAKE, grid.cell(2, 5));
+	EXPECT_EQ(Tick::tile::SNAKE, grid.cell(3, 5));
+	EXPECT_EQ(Tick::tile::SNAKE, grid.cell(4, 5));
+	EXPECT_EQ(Tick::tile::INTERSECTION, grid.cell(5, 5));
 }

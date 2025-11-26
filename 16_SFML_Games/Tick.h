@@ -15,7 +15,8 @@ public:
     {
         EMPTY = 0,
         APPLE = 1,
-        SNAKE = 2
+        SNAKE = 2,
+        INTERSECTION = 3
     };
     
 
@@ -28,11 +29,15 @@ public:
         return grid[x][y];
     }
 
-    bool intersetion(int x, int y)
+    void intersetion(int x, int y)
     {
         if (grid[x][y] == EMPTY)
         {
-
+            grid[x][y] = SNAKE;
+        }
+        else
+        {
+            grid[x][y] = INTERSECTION;
         }
     }
 
