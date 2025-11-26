@@ -1,22 +1,17 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
+#include "Tick.h"
+
 using namespace sf;
 
-int blockNumWidth = 30, blockNumHeight = 20, blockSize = 16;
-int screenWidth = blockSize * blockNumWidth;
-int screenHeight = blockSize * blockNumHeight;
-
-int down = 0, left = 1, right = 2, up = 3;
-
-int direction, snakeLength = 4; // Sets the initial movement direction and snake length
 
 // The snake
 // x,y are movement directions
 // snakeChar is the actual snake object
 // The array declaration dictates the max length of the snake
-struct Snake 
+struct Snake
 {
-    int x,y;
+    int x, y;
 }   snakeChar[100];
 
 // The Fruit
@@ -24,7 +19,7 @@ struct Snake
 // fruit is the actual fruit object
 struct Fruit
 {
-    int x,y;
+    int x, y;
 }   fruit;
 
 void Tick()
@@ -62,26 +57,26 @@ void Tick()
     if ((snakeChar[0].x == fruit.x) && (snakeChar[0].y == fruit.y)) 
     {
         snakeLength++;
-        fruit.x = rand() % blockNumWidth;
-        fruit.y = rand() % blockNumHeight;
+        fruit.x = rand() % BLOCKNUMWIDTH;
+        fruit.y = rand() % BLOCKNUMHEIGHT;
     }
 
     // Border wrapping checks/logic
-    if (snakeChar[0].x > blockNumWidth)
+    if (snakeChar[0].x > BLOCKNUMWIDTH)
     {
         snakeChar[0].x = 0;
     }
     if (snakeChar[0].x < 0)
     {
-        snakeChar[0].x = blockNumWidth;
+        snakeChar[0].x = BLOCKNUMWIDTH;
     }
-    if (snakeChar[0].y > blockNumWidth)
+    if (snakeChar[0].y > BLOCKNUMWIDTH)
     {
         snakeChar[0].y = 0;
     }
     if (snakeChar[0].y < 0)
     {
-        snakeChar[0].y = blockNumHeight;
+        snakeChar[0].y = BLOCKNUMHEIGHT;
     }
  
     // For loop that checks if the snake has collided with itself
@@ -100,8 +95,8 @@ int snake()
 {  
     srand(time(0));
 
-    // Renders the window using the screenWidth and screenHeight set at the top
-    RenderWindow window(VideoMode(screenWidth, screenHeight), "Snake Game!");
+    // Renders the window using the SCREENWIDTH and SCREENHEIGHT set at the top
+    RenderWindow window(VideoMode(SCREENWIDTH, SCREENHEIGHT), "Snake Game!");
 
     // Creates Textures emptyTileTexture and occupiedTileTexture
     // emptyTile is set to the white blocks (for empty squares)
@@ -174,22 +169,22 @@ int snake()
         
         // Draws the white (empty) boxes
         // Draws them based on the predetermined repeat values set into N and M at the top
-        for (int i = 0; i < blockNumWidth; i++)
+        for (int i = 0; i < BLOCKNUMWIDTH; i++)
         {
-            for (int j = 0; j < blockNumHeight; j++)
+            for (int j = 0; j < BLOCKNUMHEIGHT; j++)
             {
-                emptyTileSprite.setPosition(i * blockSize, j * blockSize); // Sets the sprite position based off of the texture size * index
+                emptyTileSprite.setPosition(i * BLOCKSIZE, j * BLOCKSIZE); // Sets the sprite position based off of the texture size * index
                 window.draw(emptyTileSprite);
             }
         }
 
         for (int i = 0; i < snakeLength; i++)
         {
-            occupiedTileSprite.setPosition(snakeChar[i].x * blockSize, snakeChar[i].y * blockSize); // Sets the snake sprite position based off of the texture size
+            occupiedTileSprite.setPosition(snakeChar[i].x * BLOCKSIZE, snakeChar[i].y * BLOCKSIZE); // Sets the snake sprite position based off of the texture size
             window.draw(occupiedTileSprite); 
         }
    
-        occupiedTileSprite.setPosition(fruit.x * blockSize, fruit.y * blockSize); // Draws fruit
+        occupiedTileSprite.setPosition(fruit.x * BLOCKSIZE, fruit.y * BLOCKSIZE); // Draws fruit
         window.draw(occupiedTileSprite);    
 
         window.display();
